@@ -43,8 +43,8 @@ Personal finance management system with smart budgeting and goal trackeing.
 
 # Task List
 
-[//]: # (27 tasks, 1 task precent: 3.7%)
-![](https://geps.dev/progress/4)
+[//]: # (33 tasks, 1 task precent: 3.3%)
+![](https://geps.dev/progress/3)
 
 ### Backend
 
@@ -63,6 +63,11 @@ Personal finance management system with smart budgeting and goal trackeing.
     - [ ] Transactions CRUD
     - [ ] Budget calculations
     - [ ] Report generation
+* [ ] Notifications and Alerts
+    - [ ] Budget limit alerts
+    - [ ] Bill reminders
+    - [ ] Email/SMS integration
+    - [ ] In-app notifications
 
 ### Frontend
 
@@ -77,6 +82,9 @@ Personal finance management system with smart budgeting and goal trackeing.
     - [ ] Notification Center
 * [ ] Forms
     - [ ] Transaction Wizard (multi-step)
+* [ ] Toasts/Alerts
+    - [ ] Success/Error messages
+    - [ ] Budget limit alerts
 
 ### Additional Features
 

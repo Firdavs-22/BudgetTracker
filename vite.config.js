@@ -1,13 +1,31 @@
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
+import {fileURLToPath, URL} from 'node:url'
 import laravel from 'laravel-vite-plugin';
-import tailwindcss from '@tailwindcss/vite';
+import Vue from '@vitejs/plugin-vue';
+import Vuetify from "vite-plugin-vuetify"
+import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: ['resources/js/app.js'],
             refresh: true,
         }),
-        tailwindcss(),
+        Vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false
+                }
+            }
+        }),
+        vueDevTools(),
+        Vuetify()
     ],
+    resolve: {
+        alias: {
+            '@': fileURLToPath(new URL('./resources/js', import.meta.url))
+        },
+        extensions: ['.js', '.vue']
+    },
 });

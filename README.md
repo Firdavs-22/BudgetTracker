@@ -44,13 +44,13 @@ Personal finance management system with smart budgeting and goal trackeing.
 # Task List
 
 [//]: # (33 tasks, 1 task precent: 3.3%)
-![](https://geps.dev/progress/3)
+![](https://geps.dev/progress/7)
 
 ### Backend
 
 * [x] Setup project structure
 * [ ] Authentication
-    - [ ] User registration/login
+    - [x] User registration/login
     - [ ] Password reset
     - [ ] Email verification
     - [ ] Social auth (Google)

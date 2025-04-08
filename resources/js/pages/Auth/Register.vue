@@ -8,7 +8,8 @@ const form = useForm({
     username: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    password_confirmation: '',
+    phone: '',
     remember: false,
 })
 
@@ -21,7 +22,15 @@ const prevStep = () => {
 }
 
 const submit = () => {
-    console.log("Submitting form", form)
+    form.post('/register', {
+        onError: (errors) => {
+            if (errors.email || errors.username || errors.name) {
+                step.value = 1
+            }
+            form.reset("password")
+            form.reset("password_confirmation")
+        },
+    })
 }
 </script>
 
@@ -45,7 +54,7 @@ const submit = () => {
     <v-window v-model="step">
         <v-window-item :value="1">
             <div class="mb-4">
-                <v-label class="font-weight-bold" text="Full Name"/>
+                <v-label class="font-weight-bold" text="First Name"/>
                 <v-text-field
                     v-model="form.name"
                     density="comfortable"
@@ -82,6 +91,19 @@ const submit = () => {
         </v-window-item>
 
         <v-window-item :value="2">
+            <div>
+                <v-label class="font-weight-bold" text="Phone Number"/>
+                <v-text-field
+                    type="number"
+                    v-model="form.phone"
+                    density="comfortable"
+                    variant="outlined"
+                    placeholder="Enter your phone number"
+                    color="primary"
+                    :error-messages="form.errors.phone"
+                />
+            </div>
+
             <div class="mb-4">
                 <v-label class="font-weight-bold" text="Password"/>
                 <v-text-field
@@ -100,7 +122,7 @@ const submit = () => {
             <div>
                 <v-label class="font-weight-bold" text="Confirm Password"/>
                 <v-text-field
-                    v-model="form.confirmPassword"
+                    v-model="form.password_confirmation"
                     type="password"
                     density="comfortable"
                     variant="outlined"

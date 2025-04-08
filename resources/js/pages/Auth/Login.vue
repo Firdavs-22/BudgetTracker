@@ -40,7 +40,7 @@ import {Link} from '@inertiajs/vue3';
     <v-checkbox-btn class="ms-n3" label="Remember me" color="primary"/>
   </div>
 
-  <v-btn block flat class="text-none text-uppercase" color="surface-variant" rounded="lg" slim variant="elevated"
+  <v-btn block flat class="text-none text-uppercase" color="success" rounded="lg" slim variant="elevated"
          height="56"
          text="Login"/>
 

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return Inertia("Home/Index");
-});
+})->name("dashboard");
 
 Route::middleware("guest")->group(function () {
     Route::controller(RegisterController::class)->group(function () {

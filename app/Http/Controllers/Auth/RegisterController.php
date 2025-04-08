@@ -24,7 +24,7 @@ class RegisterController extends Controller
             'phone' => $validated['phone'],
         ]);
 
-        Auth::login($user);
+        Auth::login($user, $validated['remember']);
 
         return redirect()
             ->intended("/dashboard")

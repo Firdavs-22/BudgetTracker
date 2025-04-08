@@ -11,7 +11,7 @@ class LoginReqeust extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,7 @@ class LoginReqeust extends FormRequest
         return [
             "username" => ["required", "string", "min:1", "max:255"],
             "password" => ["required", "string", "min:8"],
+            "remember" => ["required", "boolean"],
         ];
     }
 }

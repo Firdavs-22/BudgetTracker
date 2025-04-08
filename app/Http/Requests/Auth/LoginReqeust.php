@@ -22,7 +22,7 @@ class LoginReqeust extends FormRequest
     public function rules(): array
     {
         return [
-            "username" => ["required", "string", "min:1", "max:255"],
+            "email" => ["required", "string", "min:1", "max:255"],
             "password" => ["required", "string", "min:8"],
             "remember" => ["required", "boolean"],
         ];

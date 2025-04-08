@@ -16,7 +16,7 @@ class LoginController extends Controller
         $credentials = $request->validated();
 
         if (Auth::attempt([
-            "username" => $credentials["username"],
+            "email" => $credentials["email"],
             "password" => $credentials["password"]
             ], $credentials["remember"])
         ) {
@@ -26,9 +26,9 @@ class LoginController extends Controller
                 ->with("success", "Login successful. Welcome back!");
         }
 
-        return redirect()
-            ->back()
-            ->with("error", "Invalid credentials. Please try again.");
+        return back()->withErrors([
+            "email" => "Invalid credentials. Please try again.",
+        ])->onlyInput("email");
     }
 
     public function page(): Response

@@ -59,9 +59,11 @@ const submit = () => {
             :error-messages="form.errors.password"
         >
             <template v-slot:counter>
-                <v-btn color="primary" variant="text" size="small" class="text-body-2 px-0 me-n8">
-                    Forgot Password?
-                </v-btn>
+                <Link href="/forgot-password" class="text-none">
+                    <v-btn color="primary" variant="text" size="small" class="text-body-2 px-0 me-n8">
+                        Forgot Password?
+                    </v-btn>
+                </Link>
             </template>
         </v-text-field>
     </div>

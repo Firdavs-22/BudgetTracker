@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordCode;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -47,5 +50,18 @@ class User extends Authenticatable
             'phone_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $code = Str::random(6);
+        $expiresAt = now()->addHour()->addMinutes(30);
+
+        DB::table('password_reset_codes')->updateOrInsert(
+            ['email' => $this->email],
+            ['code' => $code, 'created_at' => now()]
+        );
+
+        $this->notify(new ResetPasswordCode($code, $expiresAt));
     }
 }

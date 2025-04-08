@@ -35,4 +35,12 @@ class LoginController extends Controller
     {
         return Inertia::render("Auth/Login");
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()
+            ->route("login")
+            ->with("success", "Logout successful. See you next time!");
+    }
 }

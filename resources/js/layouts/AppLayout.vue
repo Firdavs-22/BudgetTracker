@@ -1,5 +1,6 @@
 <script setup>
 import {ref} from "vue";
+import {Link} from "@inertiajs/vue3";
 
 const drawer = ref(false);
 </script>
@@ -15,6 +16,15 @@ const drawer = ref(false);
         <v-app-bar color="primary">
             <v-app-bar-nav-icon @click="drawer = !drawer"/>
             <v-toolbar-title>BudgetTracker</v-toolbar-title>
+            <v-spacer/>
+            <Link href="/logout" method="post">
+                <v-btn
+                    variant="tonal"
+                    text="Logout"
+                    color="white"
+                    class="mr-4"
+                />
+            </Link>
         </v-app-bar>
 
         <v-main>

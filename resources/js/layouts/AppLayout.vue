@@ -1,37 +1,29 @@
 <script setup>
 import {ref} from "vue";
-import {Link} from "@inertiajs/vue3";
+import {usePage} from "@inertiajs/vue3";
+import AppNavigation from "@/layouts/app/AppNavigation.vue";
+import AppBar from "@/layouts/app/AppBar.vue";
 
-const drawer = ref(false);
+const drawer = ref(true);
+const {props} = usePage();
 </script>
 
 <template>
     <v-app>
-        <v-navigation-drawer v-model="drawer">
-            <v-list-item to="/" title="Home"/>
-            <v-list-item to="/transactions" title="Transactions"/>
-            <v-list-item to="/goals" title="Goals"/>
-        </v-navigation-drawer>
+        <v-layout v-if="props.auth.user">
+            <AppNavigation :drawer="drawer"/>
 
-        <v-app-bar color="primary">
-            <v-app-bar-nav-icon @click="drawer = !drawer"/>
-            <v-toolbar-title>BudgetTracker</v-toolbar-title>
-            <v-spacer/>
-            <Link href="/logout" method="post">
-                <v-btn
-                    variant="tonal"
-                    text="Logout"
-                    color="white"
-                    class="mr-4"
-                />
-            </Link>
-        </v-app-bar>
+            <AppBar
+                :user="props.auth.user"
+                @changeNav="drawer = !drawer"
+            />
 
-        <v-main>
-            <v-container fluid>
-                <slot/>
-            </v-container>
-        </v-main>
+            <v-main>
+                <v-container fluid>
+                    <slot/>
+                </v-container>
+            </v-main>
+        </v-layout>
     </v-app>
 </template>
 

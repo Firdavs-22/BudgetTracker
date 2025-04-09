@@ -3,17 +3,12 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-//    Mail::raw("本文です。", function (Message $message) {
-//        $message->to([
-//            new Address("firdavsgaybullayev22@gmail.com", "Laravel")
-//        ])->subject("テストメール");
-//    });
-
     return Inertia("Home/Index");
-})->name("dashboard");
+})->name('home');
 
 Route::middleware("guest")->group(function () {
     Route::controller(RegisterController::class)->group(function () {
@@ -35,5 +30,10 @@ Route::middleware("guest")->group(function () {
 
 
 Route::middleware("auth")->group(function () {
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get("/dashboard", "index")->name("dashboard");
+        Route::get("/dashboard/{id}", "show")->name("dashboard.show");
+    });
+
     Route::post("/logout", [LoginController::class, "logout"])->name("logout");
 });

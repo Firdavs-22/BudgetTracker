@@ -3,10 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use Illuminate\Mail\Message;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\Mime\Address;
 
 Route::get('/', function () {
 //    Mail::raw("本文です。", function (Message $message) {
@@ -31,7 +28,8 @@ Route::middleware("guest")->group(function () {
 
     Route::controller(ResetPasswordController::class)->group(function () {
         Route::get("/forgot-password", "forgotPage")->name("password.forgot");
-        Route::post("/forgot-password", "send")->name("password.email");
+        Route::post("/forgot-password", "send");
+        Route::post("/reset-password", "reset");
     });
 });
 

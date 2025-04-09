@@ -43,8 +43,8 @@ Personal finance management system with smart budgeting and goal trackeing.
 
 # Task List
 
-[//]: # (34 tasks, 1 task precent: 3%)
-![](https://geps.dev/progress/9)
+[//]: # (68 tasks, 1 task precent: 1.5%)
+![](https://geps.dev/progress/15)
 
 ### Backend
 
@@ -55,11 +55,11 @@ Personal finance management system with smart budgeting and goal trackeing.
     - [ ] Password reset
     - [ ] Email verification
     - [ ] Social auth (Google)
-* [ ] Models & Migrations
-    - [ ] Transactions (+ relationships)
-    - [ ] Categories (nested sets)
-    - [ ] Budgets (monthly)
-    - [ ] Goals
+* [x] Models & Migrations
+    - [x] Transactions
+    - [x] Categories
+    - [x] Accounts
+    - [x] Goals
 * [ ] Routes
     - [ ] Transactions CRUD
     - [ ] Budget calculations
@@ -73,16 +73,39 @@ Personal finance management system with smart budgeting and goal trackeing.
 ### Frontend
 
 * [ ] Core Pages
-    - [ ] Dashboard (main stats)
-    - [ ] Transactions List (with filters)
-    - [ ] Budget Planner
-    - [ ] Goals Progress
+    - [ ] Dashboard
+        - [ ] Main Statistics
+        - [ ] Create Transaction
+        - [ ] Current Amount
+    - [ ] Transactions
+        - [ ] Index
+        - [ ] List
+        - [ ] Create
+        - [ ] Edit
+        - [ ] View
+    - [ ] Categories
+        - [ ] Index
+        - [ ] List
+        - [ ] Create
+        - [ ] Edit
+        - [ ] View
+    - [ ] Goals
+        - [ ] Index
+        - [ ] List
+        - [ ] Create
+        - [ ] Edit
+        - [ ] View
+    - [ ] Statistics
+    - [ ] Accounts
+        - [ ] Index
+        - [ ] Create
+        - [ ] Edit
 * [ ] Components
     - [ ] Interactive Pie/Line charts
     - [ ] Budget Category Cards
     - [ ] Notification Center
-* [ ] Forms
-    - [ ] Transaction Wizard (multi-step)
+* [x] Forms
+    - [x] Transaction Wizard (multi-step)
 * [ ] Toasts/Alerts
     - [ ] Success/Error messages
     - [ ] Budget limit alerts

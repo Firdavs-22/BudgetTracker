@@ -19,9 +19,9 @@ const logout = () => {
 <template>
     <v-app-bar class="px-3" title="App">
         <template v-slot:append>
-            <span class="ml-1 text-body-1 font-weight-medium">{{ user.username }}</span>
-            <v-btn class="ml-1" height="48" slim icon>
-                <v-avatar icon="mdi-account" size="32"/>
+            <v-btn height="48" slim>
+                <span class="mr-2 text-body-1 font-weight-medium">{{ user.username }}</span>
+                <v-avatar icon="mdi-account" size="32" color="surface-light"/>
                 <v-menu activator="parent" open-on-hover close-delay="250">
                     <v-list density="compact" nav>
                         <v-list-item append-icon="mdi-cog-outline" link title="Settings"/>

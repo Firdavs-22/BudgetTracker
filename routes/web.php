@@ -6,9 +6,6 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return Inertia("Home/Index");
-})->name('home');
 
 Route::middleware("guest")->group(function () {
     Route::controller(RegisterController::class)->group(function () {
@@ -30,9 +27,12 @@ Route::middleware("guest")->group(function () {
 
 
 Route::middleware("auth")->group(function () {
+    Route::get('/', function () {
+        return Inertia("Home/Index");
+    })->name('home');
+
     Route::controller(DashboardController::class)->group(function () {
         Route::get("/dashboard", "index")->name("dashboard");
-        Route::get("/dashboard/{id}", "show")->name("dashboard.show");
     });
 
     Route::post("/logout", [LoginController::class, "logout"])->name("logout");

@@ -6,10 +6,11 @@ import AppLayout from "@/layouts/AppLayout.vue";
 import AuthLayout from "@/layouts/AuthLayout.vue";
 
 createInertiaApp({
+    title: title => title ? `BudgetTracker` - {title} : "BudgetTracker",
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.vue', {eager: true});
         let page = pages[`./Pages/${name}.vue`];
-        if (name.startsWith("Auth")){
+        if (name.startsWith("Auth")) {
             page.default.layout = AuthLayout;
         } else {
             page.default.layout = AppLayout;

@@ -77,6 +77,7 @@ const submitCode = () => {
                     height="56"
                     text="Send Code"
                     @click="submitEmail"
+                    :loading="form.processing"
                 />
             </div>
         </v-window-item>
@@ -146,6 +147,7 @@ const submitCode = () => {
                     height="56"
                     text="Reset Password"
                     @click="submitCode"
+                    :loading="form.processing"
                 />
             </div>
         </v-window-item>

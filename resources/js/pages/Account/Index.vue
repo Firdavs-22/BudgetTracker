@@ -1,13 +1,13 @@
 <script setup>
 import {router, Link} from "@inertiajs/vue3";
 
-const props = defineProps({
+defineProps({
     accounts: Array,
     auth: Object,
 })
 
 const selectAccount = (account) => {
-    router.post("account/change",{
+    router.post("/account/change", {
         account_id: account.id
     })
 }
@@ -26,11 +26,40 @@ const selectAccount = (account) => {
             v-for="account in accounts" :key="account.id"
             md="4" cols="12" class="d-flex"
         >
-            <v-card color="surface-light" rounded="lg" class="pa-4 flex-grow-1">
-                <v-list-item rounded="0" variant="text" :title="account.name" :subtitle="account.amount +' '+ account.currency"/>
+            <v-card
+                color="surface-light"
+                rounded="lg"
+                class="pa-2 flex-grow-1"
+                :title="account.name"
+                :subtitle="account.amount +' '+ account.currency"
+            >
+                <template v-slot:append>
+                    <v-menu activator="parent">
+                        <template v-slot:activator>
+                            <v-btn flat icon="mdi-dots-vertical" size="sm" variant="text"/>
+                        </template>
+
+                        <v-list
+                            bg-color="surface-light"
+                            class="d-flex flex-column ga-1 pa-1"
+                            density="compact"
+                            rounded="lg"
+                            variant="text"
+                            slim
+                        >
+                            <Link class="text-decoration-none text-high-emphasis text-subtitle-2">
+                                <v-list-item prepend-icon="mdi-pencil" rounded="lg" title="Edit" link/>
+                            </Link>
+
+                            <Link class="text-decoration-none text-high-emphasis text-subtitle-2">
+                                <v-list-item prepend-icon="mdi-delete" rounded="lg" title="Delete" link/>
+                            </Link>
+                        </v-list>
+                    </v-menu>
+                </template>
 
                 <v-card-text class="text-medium-emphasis pt-2">
-                    <div class="mb-2">{{account.description}}</div>
+                    <div class="mb-2">{{ account.description }}</div>
                     <v-btn color="primary" text="Select" variant="tonal"
                            :disabled="auth.current_account === account.id"
                            @click="selectAccount(account)"/>

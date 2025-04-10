@@ -23,25 +23,29 @@ const selectItem = (item) => ({
     subtitle: item.amount
 })
 
-watch(() => props.userProps, (newValue) => {
-    selectedAccount.value = newValue.current_account
-});
-watch(selectedAccount, (newValue) => {
-    if (newValue) {
+const selectAccount = (newValue) => {
+    if (newValue && newValue !== selectedAccount.value) {
+        selectedAccount.value = newValue
         router.post("/account/change", {
             account_id: newValue
         })
     }
-}, {immediate: true});
+}
+
+watch(() => props.userProps, (newValue) => {
+    selectedAccount.value = newValue.current_account
+});
+
 </script>
 
 <template>
     <v-app-bar class="px-3">
         <v-app-bar-title class="d-flex align-center">
             <v-select
-                v-model="selectedAccount"
+                :model-value="selectedAccount"
                 variant="outlined"
                 density="compact"
+                @update:modelValue="selectAccount"
                 :items="userProps.user.accounts"
                 :item-props="selectItem"
                 :menu-props="{scrim: true, scrollStrategy: 'close'}"

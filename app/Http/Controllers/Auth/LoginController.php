@@ -36,7 +36,7 @@ class LoginController extends Controller
         return Inertia::render("Auth/Login");
     }
 
-    public function logout()
+    public function logout(): RedirectResponse
     {
         Auth::logout();
         return redirect()

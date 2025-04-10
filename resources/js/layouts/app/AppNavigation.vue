@@ -1,8 +1,20 @@
 <script setup>
+import NavigationItem from "@/layouts/app/NavigationItem.vue";
+import {usePage} from "@inertiajs/vue3";
+
 defineProps({
     drawer: Boolean,
-    userProps: Object
+    userProps: Object,
+    items: Array,
 });
+
+const page = usePage();
+const isActive = (route) => {
+    if (route === "/"){
+        return page.url === route;
+    }
+    return page.url.startsWith(route)
+};
 </script>
 
 <template>
@@ -14,11 +26,13 @@ defineProps({
         <div class="px-2">
             <v-list density="comfortable" nav slim>
                 <v-list-subheader title="Dashboard" class="font-weight-bold"/>
-                <v-list-item
-                    link
-                    rounded="lg"
-                    prepend-icon="mdi-view-dashboard-variant"
-                    title="Dashboard"
+                <NavigationItem
+                    v-for="item in items"
+                    :key="item.route"
+                    :active="isActive(item.route)"
+                    :icon="item.icon"
+                    :route="item.route"
+                    :name="item.name"
                 />
             </v-list>
         </div>

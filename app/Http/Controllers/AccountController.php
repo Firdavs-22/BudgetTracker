@@ -53,7 +53,7 @@ class AccountController extends Controller
 
         if (!$account) return back();
 
-        return Inertia::render("Account/Update", [
+        return Inertia::render("Account/Edit", [
             "account" => fn() => new AccountResource($account),
         ]);
     }

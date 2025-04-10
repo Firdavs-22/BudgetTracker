@@ -82,9 +82,12 @@ const deleteAccount = () => {
 
                 <v-card-text class="text-medium-emphasis pt-2">
                     <div class="mb-2">{{ account.description }}</div>
-                    <v-btn color="primary" text="Select" variant="tonal"
-                           :disabled="auth.current_account === account.id"
-                           @click="selectAccount(account)"/>
+                    <v-btn
+                        color="primary" :text="auth.current_account === account.id ? 'Selected' : 'Select'"
+                        variant="tonal"
+                        :disabled="auth.current_account === account.id"
+                        @click="selectAccount(account)"
+                    />
                 </v-card-text>
             </v-card>
         </v-col>

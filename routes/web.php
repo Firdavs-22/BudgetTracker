@@ -44,6 +44,8 @@ Route::middleware("auth")->group(function () {
 
         Route::post("/account/change", "select");
         Route::post("/account/create", "store");
+        Route::put("/account/{account_id}", "edit")->where("account_id", "[0-9]+");
+        Route::delete("/account/{account_id}", "delete")->where("account_id", "[0-9]+");
     });
 
     Route::controller(CategoryController::class)->group(function () {

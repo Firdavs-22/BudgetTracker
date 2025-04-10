@@ -27,7 +27,11 @@ const closeDialog = () => {
 }
 
 const deleteAccount = () => {
-    if (deletingItem.value) router.delete(`/account/${deletingItem.value.id}`);
+    if (deletingItem.value) router.delete(`/account/${deletingItem.value.id}`, {
+        onFinish() {
+            closeDialog()
+        },
+    })
 }
 
 </script>

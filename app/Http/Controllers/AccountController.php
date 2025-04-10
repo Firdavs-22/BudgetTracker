@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Account\CreateAccountRequest;
 use App\Http\Requests\Account\SelectAccountRequest;
+use App\Http\Requests\UpdateAccountRequest;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use Illuminate\Http\RedirectResponse;
@@ -56,5 +57,42 @@ class AccountController extends Controller
         return Inertia::render("Account/Edit", [
             "account" => fn() => new AccountResource($account),
         ]);
+    }
+
+    public function edit(int $account_id, UpdateAccountRequest $request)
+    {
+        $account = Account::query()
+            ->where("id", $account_id)
+            ->where("user_id", auth()->user()->id)
+            ->first();
+
+        if (!$account) return redirect()->route("account.index")->with("error", "Account not found.");
+
+        $validated = $request->validated();
+
+        $account->update([
+            "name" => $validated["name"],
+            "description" => $validated["description"],
+            "currency" => $validated["currency"],
+        ]);
+
+        return redirect()->route("account.index")->with("success", "Account updated successfully.");
+    }
+
+    public function delete(int $account_id): RedirectResponse
+    {
+        $account = Account::query()
+            ->where("id", $account_id)
+            ->where("user_id", auth()->user()->id)
+            ->first();
+
+        if (!$account) return redirect()->route("account.index")->with("error", "Account not found.");
+        $account->delete();
+        $sessionAccountId = session()->get('account_id');
+        if ($sessionAccountId == $account->id) {
+            session()->forget('account_id');
+        }
+
+        return redirect()->route("account.index")->with("success", "Account deleted successfully.");
     }
 }

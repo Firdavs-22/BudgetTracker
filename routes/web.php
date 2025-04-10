@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -33,6 +34,15 @@ Route::middleware("auth")->group(function () {
 
     Route::controller(DashboardController::class)->group(function () {
         Route::get("/dashboard", "index")->name("dashboard");
+    });
+
+    Route::controller(AccountController::class)->group(function () {
+        Route::get("/account", "index")->name("account.index");
+        Route::get("/account/create", "create")->name("account.create");
+        Route::get("/account/{account_id}", "update")->where("account_id", "[0-9]+")->name("account.update");
+
+        Route::post("/account/change", "select");
+        Route::post("/account/create", "store");
     });
 
     Route::post("/logout", [LoginController::class, "logout"])->name("logout");

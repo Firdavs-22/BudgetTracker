@@ -1,13 +1,14 @@
 <script setup>
 defineProps({
-    drawer: Boolean
+    drawer: Boolean,
+    userProps: Object
 });
 </script>
 
 <template>
     <v-navigation-drawer :model-value="drawer" floating elevation="10">
         <div class="pb-4 pt-6 px-2">
-            <v-img src="./logo.png" height="33"/>
+            <v-img src="/logo.png" height="33"/>
         </div>
 
         <div class="px-2">

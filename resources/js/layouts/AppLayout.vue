@@ -5,17 +5,17 @@ import AppNavigation from "@/layouts/app/AppNavigation.vue";
 import AppBar from "@/layouts/app/AppBar.vue";
 
 const drawer = ref(true);
-const {props} = usePage();
+const page = usePage();
 </script>
 
 <template>
     <v-app>
-        <v-layout v-if="props.auth.user">
-            <AppNavigation :drawer="drawer"/>
+        <v-layout v-if="page.props.auth.user">
+            <AppNavigation :drawer="drawer" />
 
             <AppBar
-                :user="props.auth.user"
                 @changeNav="drawer = !drawer"
+                :userProps="page.props.auth"
             />
 
             <v-main>

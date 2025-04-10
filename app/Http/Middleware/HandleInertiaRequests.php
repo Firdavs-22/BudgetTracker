@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
                 "user" => $request->user()
                     ? new UserResource($request->user())
                     : null,
+                "current_account" => fn() => session("account_id", null),
             ],
             "flash" => [
                 "success" => fn() => $request->session()->get("success"),

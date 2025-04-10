@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,10 @@ Route::middleware("auth")->group(function () {
 
         Route::post("/account/change", "select");
         Route::post("/account/create", "store");
+    });
+
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get("/category", "index")->name("category.index");
     });
 
     Route::post("/logout", [LoginController::class, "logout"])->name("logout");

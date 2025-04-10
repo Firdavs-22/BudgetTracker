@@ -1,20 +1,11 @@
 <script setup>
 import NavigationItem from "@/layouts/app/NavigationItem.vue";
-import {usePage} from "@inertiajs/vue3";
 
 defineProps({
     drawer: Boolean,
-    userProps: Object,
-    items: Array,
+    userProps: Object
 });
 
-const page = usePage();
-const isActive = (route) => {
-    if (route === "/"){
-        return page.url === route;
-    }
-    return page.url.startsWith(route)
-};
 </script>
 
 <template>
@@ -26,14 +17,9 @@ const isActive = (route) => {
         <div class="px-2">
             <v-list density="comfortable" nav slim>
                 <v-list-subheader title="Dashboard" class="font-weight-bold"/>
-                <NavigationItem
-                    v-for="item in items"
-                    :key="item.route"
-                    :active="isActive(item.route)"
-                    :icon="item.icon"
-                    :route="item.route"
-                    :name="item.name"
-                />
+                <NavigationItem icon="view-dashboard-variant" route="/dashboard" name="Dashboard"/>
+                <NavigationItem icon="account-group-outline" route="/account" name="Accounts"/>
+                <NavigationItem icon="shape-plus" route="/category" name="Categories"/>
             </v-list>
         </div>
     </v-navigation-drawer>

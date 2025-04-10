@@ -7,24 +7,13 @@ import AppBar from "@/layouts/app/AppBar.vue";
 const drawer = ref(true);
 const page = usePage();
 
-const navigationItems = [
-    {
-        name: "Dashboard",
-        icon: "view-dashboard-variant",
-        route: "/dashboard",
-    },
-    {
-        name: "Accounts",
-        icon: "account-group-outline",
-        route: "/account",
-    }
-];
+
 </script>
 
 <template>
     <v-app>
         <v-layout v-if="page.props.auth.user">
-            <AppNavigation :drawer="drawer" :items="navigationItems" />
+            <AppNavigation :drawer="drawer" />
 
             <AppBar
                 @changeNav="drawer = !drawer"

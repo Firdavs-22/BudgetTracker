@@ -28,7 +28,6 @@ watch(() => props.userProps, (newValue) => {
 });
 watch(selectedAccount, (newValue) => {
     if (newValue) {
-        console.log("Selected account changed to: ", newValue);
         router.post("/account/change", {
             account_id: newValue
         })

@@ -1,6 +1,7 @@
 <script setup>
 import {router, Link} from "@inertiajs/vue3";
 import {ref} from "vue";
+import SubmitDialog from "@/components/submitDialog.vue";
 
 defineProps({
     accounts: Array,
@@ -93,24 +94,11 @@ const deleteAccount = () => {
         </v-col>
     </v-row>
 
-    <v-dialog v-model="dialog" max-width="500" persistent hide-overlay>
-        <v-card
-            v-if="deletingItem"
-            prepend-icon="mdi-delete"
-            :title="`Do You Want to Delete a ${deletingItem.name} ?`"
-            :text="`Are you sure you want to delete this ${deletingItem.name} account? This action cannot be undone.`"
-        >
-            <template v-slot:actions>
-                <v-spacer/>
-
-                <v-btn @click="closeDialog">
-                    Undo
-                </v-btn>
-
-                <v-btn @click="deleteAccount">
-                    Delete
-                </v-btn>
-            </template>
-        </v-card>
-    </v-dialog>
+    <submit-dialog
+        :title="`Do You Want to Delete a ${deletingItem?.name} ?`"
+        :text="`Are you sure you want to delete this ${deletingItem?.name} account? This action cannot be undone.`"
+        :dialog="dialog"
+        @close="closeDialog"
+        @delete="deleteAccount"
+    />
 </template>

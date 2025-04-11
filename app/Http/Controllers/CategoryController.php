@@ -126,7 +126,7 @@ class CategoryController extends Controller
             ]);
         }
 
-        $category->softDeletes();
+        $category->delete();
 
         return redirect()->route("category.list")->with([
             "message" => "Category deleted successfully"

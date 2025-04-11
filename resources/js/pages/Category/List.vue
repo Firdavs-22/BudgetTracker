@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from "vue";
-import {Link} from "@inertiajs/vue3";
+import {Link, router} from "@inertiajs/vue3";
+import SubmitDialog from "@/components/submitDialog.vue";
 
 defineProps({
     categories: Array,
@@ -16,6 +17,26 @@ const headers = [
     {key: "actions", title: "", align: "end", sortable: false},
 ];
 const search = ref()
+const dialog = ref(false)
+const deletingItem = ref(null)
+
+const confirmDelete = (category) => {
+    dialog.value = true
+    deletingItem.value = category
+}
+
+const closeDialog = () => {
+    dialog.value = false
+    deletingItem.value = null
+}
+
+const deleteAccount = () => {
+    if (deletingItem.value) router.delete(`/category/${deletingItem.value.id}`, {
+        onFinish() {
+            closeDialog()
+        },
+    })
+}
 </script>
 <!--Create Button-->
 <!--A Category Table with a Search and Sorts and Pagination (Edit, Delete) Actions-->
@@ -101,9 +122,17 @@ const search = ref()
                     <Link class="text-decoration-none text-none" :href="`/category/edit/${item.id}`">
                         <v-btn size="small" variant="tonal" color="lime-darken-2" density="comfortable" icon="mdi-pencil"/>
                     </Link>
-                    <v-btn size="small" variant="tonal" color="error" density="comfortable" icon="mdi-delete"/>
+                    <v-btn size="small" variant="tonal" color="error" density="comfortable" icon="mdi-delete" @click="confirmDelete(item)"/>
                 </div>
             </template>
         </v-data-table>
     </v-card>
+
+    <submit-dialog
+        :title="`Do You Want to Delete a ${deletingItem?.name} ?`"
+        :text="`Are you sure you want to delete this ${deletingItem?.name} category? This action cannot be undone.`"
+        :dialog="dialog"
+        @close="closeDialog"
+        @delete="deleteAccount"
+    />
 </template>

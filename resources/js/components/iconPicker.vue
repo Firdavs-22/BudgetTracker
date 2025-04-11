@@ -1,10 +1,8 @@
 <template>
     <div>
         <v-dialog v-model="dialog" width="600">
-            <template #activator="{ props }">
-                <v-btn v-bind="props" :prepend-icon="selectedIcon && 'mdi-'+selectedIcon">
-                    {{ selectedIcon ? selectedIcon.replace('mdi-', '') : 'Select Icon' }}
-                </v-btn>
+            <template v-slot:activator="{ props }">
+                <v-btn v-bind="props" :prepend-icon="selectedIcon && 'mdi-'+selectedIcon" text="Select Icon" variant="outlined"/>
             </template>
 
             <v-card>

@@ -125,6 +125,14 @@ const deleteAccount = () => {
                     <v-btn size="small" variant="tonal" color="error" density="comfortable" icon="mdi-delete" @click="confirmDelete(item)"/>
                 </div>
             </template>
+
+            <template v-slot:no-data>
+                <v-alert type="info" icon="mdi-information" density="comfortable" class="ma-2 text-body-1 font-weight-medium" text="No categories found"/>
+            </template>
+
+            <template v-slot:loading>
+                <v-skeleton-loader type="table-row@10"/>
+            </template>
         </v-data-table>
     </v-card>
 

@@ -1,24 +1,58 @@
 <script setup>
-import {ref} from "vue";
-import {Link, router} from "@inertiajs/vue3";
+import {ref, watch} from "vue";
+import {Link, router, usePage} from "@inertiajs/vue3";
 import SubmitDialog from "@/components/submitDialog.vue";
+import {debounce} from "vuetify/lib/util/index.js";
 
-defineProps({
+const props = defineProps({
     categories: Array,
-    links: Object
+    links: Object,
+    filters: Object
 });
 
-const headers = [
-    {key: "name", title: "Name"},
-    {key: "type", title: "Transaction Type"},
-    {key: "icon", title: "Icon", sortable: false},
-    {key: "transaction_count", title: "Transactions", align: "center"},
-    {key: "created_at", title: "Created At"},
-    {key: "actions", title: "", align: "end", sortable: false},
-];
-const search = ref()
+const page = usePage();
+const isNavigating = ref(false)
+const search = ref(props.filters.search || "")
 const dialog = ref(false)
 const deletingItem = ref(null)
+
+const loadItems = (newParams) => {
+    const params = new URLSearchParams(page.url.search);
+
+    Object.entries(newParams).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+            params.set(key, value)
+        } else {
+            params.delete(key)
+        }
+    })
+
+    Array.from(params.keys()).forEach((key) => {
+        if (!params.get(key)) params.delete(key)
+    })
+
+    router.get(`/category/list/?${params.toString()}`, {}, {
+        preserveScroll: true,
+        preserveState: true,
+        replace: true,
+        onStart: () => (isNavigating.value = true),
+        onFinish: () => (isNavigating.value = false)
+    })
+}
+
+const updateOptions = ({page: newPage, itemsPerPage, sortBy}) => {
+    const params = {
+        page: newPage,
+        per_page: itemsPerPage
+    }
+
+    if (sortBy.length) {
+        params.sort_by = sortBy[0].key;
+        params.sort_order = sortBy[0].order;
+    }
+
+    loadItems(params)
+}
 
 const confirmDelete = (category) => {
     dialog.value = true
@@ -37,11 +71,24 @@ const deleteAccount = () => {
         },
     })
 }
+
+const headers = [
+    {key: "name", title: "Name"},
+    {key: "type", title: "Transaction Type"},
+    {key: "icon", title: "Icon", sortable: false},
+    {key: "transaction_count", title: "Transactions", align: "center"},
+    {key: "created_at", title: "Created At"},
+    {key: "actions", title: "", align: "end", sortable: false},
+];
+
+watch(search, debounce((newSearch) => {
+    loadItems({search: newSearch, page: 1})
+}, 500))
 </script>
-<!--Create Button-->
 <!--A Category Table with a Search and Sorts and Pagination (Edit, Delete) Actions-->
 <!--Add Any Statistics with filter (for example amount) + filter (by month, by day, ...)-->
 <template>
+
     <v-card title="Category List" flat>
         <template v-slot:text>
             <div class="d-flex justify-space-between">
@@ -74,11 +121,15 @@ const deleteAccount = () => {
                 </div>
             </div>
         </template>
-
-        <v-data-table
+        <v-data-table-server
+            v-model:items-per-page="links.pagination.per_page"
+            v-model:page="links.pagination.current_page"
             :headers="headers"
             :items="categories"
-            :search="search"
+            :items-length="links.pagination.total"
+            :items-per-page-options="[1,5,10,25,50,100]"
+            :loading="isNavigating"
+            @update:options="updateOptions"
         >
             <template v-slot:item.type="{item}">
                 <v-chip
@@ -120,20 +171,23 @@ const deleteAccount = () => {
                         <v-btn size="small" variant="tonal" color="secondary" density="comfortable" icon="mdi-eye"/>
                     </Link>
                     <Link class="text-decoration-none text-none" :href="`/category/edit/${item.id}`">
-                        <v-btn size="small" variant="tonal" color="lime-darken-2" density="comfortable" icon="mdi-pencil"/>
+                        <v-btn size="small" variant="tonal" color="lime-darken-2" density="comfortable"
+                               icon="mdi-pencil"/>
                     </Link>
-                    <v-btn size="small" variant="tonal" color="error" density="comfortable" icon="mdi-delete" @click="confirmDelete(item)"/>
+                    <v-btn size="small" variant="tonal" color="error" density="comfortable" icon="mdi-delete"
+                           @click="confirmDelete(item)"/>
                 </div>
             </template>
 
             <template v-slot:no-data>
-                <v-alert type="info" icon="mdi-information" density="comfortable" class="ma-2 text-body-1 font-weight-medium" text="No categories found"/>
+                <v-alert type="info" icon="mdi-information" density="comfortable"
+                         class="ma-2 text-body-1 font-weight-medium" text="No categories found"/>
             </template>
 
             <template v-slot:loading>
                 <v-skeleton-loader type="table-row@10"/>
             </template>
-        </v-data-table>
+        </v-data-table-server>
     </v-card>
 
     <submit-dialog

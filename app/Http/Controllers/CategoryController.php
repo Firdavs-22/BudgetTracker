@@ -22,12 +22,19 @@ class CategoryController extends Controller
 
     public function list(Request $request): Response
     {
-        $categories = Category::query()->where(["account_id" => $request->get("account_id")])
-            ->latest()->paginate(10);
-        ;
+        $per_page = $request->get("per_page", 10);
+        $search = $request->get("search");
+        $categories = Category::query()
+            ->where(["account_id" => $request->get("account_id")])
+            ->when($search, fn($query) => $query->where("name", "like", "%$search%"))
+            ->latest()
+            ->paginate($per_page)
+            ->withQueryString();
+
         return Inertia::render('Category/List', [
             "categories" => CategoryListResource::collection($categories->items()),
             "links" => new PaginationResource($categories),
+            "filters" => $request->only(["search"]),
         ]);
     }
 

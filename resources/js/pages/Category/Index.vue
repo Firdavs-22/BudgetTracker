@@ -1,4 +1,5 @@
 <script setup>
+import {Link} from "@inertiajs/vue3";
 
 const mostUsed = [
     2, 1, 2, 4, 3, 5, 3, 4, 3, 5, 1, 6, 2, 6, 4
@@ -27,7 +28,9 @@ const mostUsed = [
                 hide-details
             />
         </div>
-        <v-btn color="primary" text="Categories List"/>
+        <Link href="/category/list">
+            <v-btn color="primary" text="Categories List"/>
+        </Link>
     </div>
 
     <v-row dense class="my-2">

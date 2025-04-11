@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Account\CreateAccountRequest;
 use App\Http\Requests\Account\SelectAccountRequest;
-use App\Http\Requests\UpdateAccountRequest;
+use App\Http\Requests\Account\UpdateAccountRequest;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use Illuminate\Http\RedirectResponse;

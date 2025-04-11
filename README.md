@@ -43,8 +43,8 @@ Personal finance management system with smart budgeting and goal trackeing.
 
 # Task List
 
-[//]: # (70 tasks, 1 task precent, complated 18, 25.2%: 1.4%)
-![](https://geps.dev/progress/25)
+[//]: # (70 tasks, 1 task precent, complated 19, 26.6%: 1.4%)
+![](https://geps.dev/progress/27)
 
 ### Backend
 
@@ -87,7 +87,7 @@ Personal finance management system with smart budgeting and goal trackeing.
         - [ ] View
     - [ ] Categories
         - [ ] Index
-        - [ ] List
+        - [x] List
         - [x] Create
         - [x] Edit
         - [ ] View

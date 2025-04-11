@@ -22,7 +22,7 @@ class CategoryListResource extends JsonResource
             "color" => $this->color,
             "icon" => $this->icon,
             "transaction_count" => $this->transactions->count(),
-            "created_at" => $this->created_at,
+            "created_at" => $this->created_at->format("Y-m-d H:i"),
         ];
     }
 }

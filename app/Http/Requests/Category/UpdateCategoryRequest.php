@@ -26,7 +26,7 @@ class UpdateCategoryRequest extends FormRequest
         return [
             "name" => ["required", "string", "min:1","max:20"],
             "type" => ["required", "string", Rule::enum(TransactionType::class)],
-            "color" => ["required", "string", "digits:6"],
+            "color" => ["required", "string", "min:6", "max:6"],
             "icon" => ["required", "string", "min:1", "max:30"],
         ];
     }

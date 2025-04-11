@@ -38,7 +38,7 @@ class CategoryController extends Controller
             "id" => $category_id
         ])->first();
         if (!$category) {
-            return redirect()->route("categories.list")->with([
+            return redirect()->route("category.list")->with([
                 "message" => "Category not found"
             ]);
         }
@@ -65,7 +65,7 @@ class CategoryController extends Controller
             "icon" => $validated["icon"],
         ]);
 
-        return redirect()->route("categories.list")->with([
+        return redirect()->route("category.list")->with([
             "message" => "Category created successfully"
         ]);
     }
@@ -77,7 +77,7 @@ class CategoryController extends Controller
             "id" => $category_id
         ])->first();
         if (!$category) {
-            return redirect()->route("categories.list")->with([
+            return redirect()->route("category.list")->with([
                 "message" => "Category not found"
             ]);
         }
@@ -95,7 +95,7 @@ class CategoryController extends Controller
         ])->first();
 
         if (!$category) {
-            return redirect()->route("categories.list")->with([
+            return redirect()->route("category.list")->with([
                 "message" => "Category not found"
             ]);
         }
@@ -108,7 +108,7 @@ class CategoryController extends Controller
             "icon" => $validated["icon"],
         ]);
 
-        return redirect()->route("categories.list")->with([
+        return redirect()->route("category.list")->with([
             "message" => "Category updated successfully"
         ]);
     }
@@ -121,14 +121,14 @@ class CategoryController extends Controller
         ])->first();
 
         if (!$category) {
-            return redirect()->route("categories.list")->with([
+            return redirect()->route("category.list")->with([
                 "message" => "Category not found"
             ]);
         }
 
         $category->softDeletes();
 
-        return redirect()->route("categories.list")->with([
+        return redirect()->route("category.list")->with([
             "message" => "Category deleted successfully"
         ]);
     }

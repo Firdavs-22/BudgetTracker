@@ -20,6 +20,7 @@ defineProps({
                 <NavigationItem icon="view-dashboard-variant" route="/dashboard" name="Dashboard"/>
                 <NavigationItem icon="account-group-outline" route="/account" name="Accounts"/>
                 <NavigationItem icon="shape-plus" route="/category" name="Categories"/>
+                <NavigationItem icon="cash-sync" route="/transaction" name="Transactions"/>
             </v-list>
         </div>
     </v-navigation-drawer>

@@ -43,11 +43,12 @@ class TransactionController extends Controller
 
         $per_page = $validated["per_page"] ?? 10;
         $search = $validated["search"] ?? null;
+        $category_id = $validated["category_id"] ?? null;
 
         $categories = Transaction::query()
             ->where(["account_id" => $request->get("account_id")])
             ->when($search, fn($query) => $query->where("name", "like", "%$search%"))
-            ->when($validated["category_id"], fn($query) => $query->where("category_id", $validated["category_id"]))
+            ->when($category_id, fn($query) => $query->where("category_id", $validated["category_id"]))
             ->with(["category"]);
 
         $sortColumn = $validated["sort_by"] ?? "created_at";

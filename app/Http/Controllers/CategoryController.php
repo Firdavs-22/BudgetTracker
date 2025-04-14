@@ -39,7 +39,6 @@ class CategoryController extends Controller
             ->paginate($per_page)
             ->withQueryString();
 
-
         return Inertia::render('Category/List', [
             "categories" => CategoryListResource::collection($categories->items()),
             "links" => new PaginationResource($categories),

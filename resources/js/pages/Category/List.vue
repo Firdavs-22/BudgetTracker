@@ -22,9 +22,10 @@ const initialSortBy = computed(() => {
         : [];
 });
 
+
 const loadItems = (newParams) => {
     const params = new URLSearchParams(page.url.search);
-    Object.entries(newParams).forEach(([key, value]) => {
+    Object.entries({...newParams, search: search.value || ""}).forEach(([key, value]) => {
         if (value !== undefined && value !== null && value !== "") {
             params.set(key, value)
         } else {
@@ -89,10 +90,10 @@ const headers = [
 watch(search, debounce((newSearch) => {
     loadItems({
         search: newSearch,
-        per_page: links.pagination.per_page,
         page: 1
     })
 }, 500))
+
 </script>
 <!--Add Any Statistics with filter (for example amount) + filter (by month, by day, ...)-->
 <template>

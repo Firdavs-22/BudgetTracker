@@ -17,7 +17,6 @@ const dialog = ref(false)
 const deletingItem = ref(null)
 
 const initialSortBy = computed(() => {
-    console.log(props.filters)
     return props.filters.sort_by
         ? [{ key: props.filters.sort_by, order: props.filters.sort_order || 'asc' }]
         : [];

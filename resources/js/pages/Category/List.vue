@@ -1,5 +1,5 @@
 <script setup>
-import {ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 import {Link, router, usePage} from "@inertiajs/vue3";
 import SubmitDialog from "@/components/submitDialog.vue";
 import {debounce} from "vuetify/lib/util/index.js";
@@ -16,9 +16,15 @@ const search = ref(props.filters.search || "")
 const dialog = ref(false)
 const deletingItem = ref(null)
 
+const initialSortBy = computed(() => {
+    console.log(props.filters)
+    return props.filters.sort_by
+        ? [{ key: props.filters.sort_by, order: props.filters.sort_order || 'asc' }]
+        : [];
+});
+
 const loadItems = (newParams) => {
     const params = new URLSearchParams(page.url.search);
-
     Object.entries(newParams).forEach(([key, value]) => {
         if (value !== undefined && value !== null && value !== "") {
             params.set(key, value)
@@ -82,10 +88,13 @@ const headers = [
 ];
 
 watch(search, debounce((newSearch) => {
-    loadItems({search: newSearch, page: 1})
+    loadItems({
+        search: newSearch,
+        per_page: links.pagination.per_page,
+        page: 1
+    })
 }, 500))
 </script>
-<!--A Category Table with a Search and Sorts and Pagination (Edit, Delete) Actions-->
 <!--Add Any Statistics with filter (for example amount) + filter (by month, by day, ...)-->
 <template>
 
@@ -129,6 +138,7 @@ watch(search, debounce((newSearch) => {
             :items-length="links.pagination.total"
             :items-per-page-options="[1,5,10,25,50,100]"
             :loading="isNavigating"
+            :sort-by="initialSortBy"
             @update:options="updateOptions"
         >
             <template v-slot:item.type="{item}">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Category\CreateCategoryRequest;
+use App\Http\Requests\Category\ListCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryListResource;
 use App\Http\Resources\CategoryResource;
@@ -20,21 +21,29 @@ class CategoryController extends Controller
         return Inertia::render('Category/Index');
     }
 
-    public function list(Request $request): Response
+    public function list(ListCategoryRequest $request): Response
     {
-        $per_page = $request->get("per_page", 10);
-        $search = $request->get("search");
+        $validated = $request->validated();
+
+        $per_page = $validated["per_page"] ?? 10;
+        $search = $validated["search"] ?? null;
+
         $categories = Category::query()
             ->where(["account_id" => $request->get("account_id")])
-            ->when($search, fn($query) => $query->where("name", "like", "%$search%"))
-            ->latest()
+            ->when($search, fn($query) => $query->where("name", "like", "%$search%"));
+
+        $sortColumn = $validated["sort_by"] ?? "created_at";
+        $sortOrder = $validated["sort_order"] ?? "asc";
+
+        $categories = $categories->orderBy($sortColumn, $sortOrder)
             ->paginate($per_page)
             ->withQueryString();
+
 
         return Inertia::render('Category/List', [
             "categories" => CategoryListResource::collection($categories->items()),
             "links" => new PaginationResource($categories),
-            "filters" => $request->only(["search"]),
+            "filters" => $request->only(["search", "sort_by", "sort_order"]),
         ]);
     }
 

@@ -10,7 +10,6 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\PaginationResource;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -72,7 +71,7 @@ class CategoryController extends Controller
     {
         $validated = $request->validated();
 
-        $category = Category::create([
+        Category::create([
             "account_id" => $request->get("account_id"),
             "name" => $validated["name"],
             "type" => $validated["type"],

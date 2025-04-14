@@ -25,7 +25,9 @@ class TransactionController extends Controller
 
     public function view(int $transaction_id): Response|RedirectResponse
     {
-        $transaction = Transaction::query()->find($transaction_id);
+        $transaction = Transaction::query()
+            ->where(["id" => $transaction_id, "account_id" => request()->get("account_id")])
+            ->first();
 
         if (!$transaction) {
             return redirect()->route("transaction.list")->with([
@@ -68,7 +70,7 @@ class TransactionController extends Controller
     public function create(): Response
     {
         return Inertia::render('Transaction/Create', [
-            "categories" => fn() => CategorySelectReaource::collection(Category::all()),
+            "categories" => fn() => CategorySelectReaource::collection(Category::query()->where("account_id", request()->get("account_id"))->get()),
         ]);
     }
 
